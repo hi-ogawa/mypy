@@ -456,9 +456,9 @@ def _collect_field_args(expr: Expression,
     if (
             isinstance(expr, CallExpr) and
             isinstance(expr.callee, RefExpr) and
-            expr.callee.fullname == 'dataclasses.field'
+            expr.callee.fullname == 'dataclasses.field' and
+            None not in expr.arg_names  # field() only takes keyword arguments.
     ):
-        # field() only takes keyword arguments.
         args = {}
         for name, arg in zip(expr.arg_names, expr.args):
             if name is None:

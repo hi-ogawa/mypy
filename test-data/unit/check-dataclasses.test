@@ -842,6 +842,19 @@ class A:
         return cls()
 [builtins fixtures/dataclasses.pyi]
 
+[case testDataclassFieldDoesNotFailOnPositionalArguments]
+# flags: --python-version 3.7
+from dataclasses import dataclass, field
+
+@dataclass
+class C:
+    x: int = field(0)  # E: No overload variant of "field" matches argument type "int" \
+                       # N: Possible overload variants: \
+                       # N:     def [_T] field(*, default: _T, init: bool = ..., repr: bool = ..., hash: Optional[bool] = ..., compare: bool = ..., metadata: Optional[Mapping[str, Any]] = ..., kw_only: bool = ...) -> _T \
+                       # N:     def [_T] field(*, default_factory: Callable[[], _T], init: bool = ..., repr: bool = ..., hash: Optional[bool] = ..., compare: bool = ..., metadata: Optional[Mapping[str, Any]] = ..., kw_only: bool = ...) -> _T \
+                       # N:     def field(*, init: bool = ..., repr: bool = ..., hash: Optional[bool] = ..., compare: bool = ..., metadata: Optional[Mapping[str, Any]] = ..., kw_only: bool = ...) -> Any
+[builtins fixtures/dataclasses.pyi]
+
 [case testDataclassesInitVarOverride]
 # flags: --python-version 3.7
 import dataclasses
