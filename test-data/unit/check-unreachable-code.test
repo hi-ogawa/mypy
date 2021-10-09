@@ -1390,3 +1390,45 @@ def f() -> None:
     if nope():
         x = 1  # E: Statement is unreachable
 [builtins fixtures/dict.pyi]
+
+[case testUnreachableBranchBySys1]
+# flags: --warn-unreachable
+import sys
+
+def f() -> int:
+    if sys.platform != "fictoinal":  # E: Unsupported left operand type for != ("str")
+        return 1
+    return 0  # E: Statement is unreachable
+[builtins fixtures/dict.pyi]
+
+[case testUnreachableBranchBySys2]
+# flags: --warn-unreachable
+import sys
+
+def f() -> int:
+    if sys.platform == "fictoinal":
+        return 1
+    return 0
+[builtins fixtures/dict.pyi]
+
+[case testUnreachableBranchBySys3]
+# flags: --warn-unreachable
+import sys
+
+def f() -> int:
+    if sys.platform != "fictoinal":  # E: Unsupported left operand type for != ("str")
+        return 1
+    else:
+        return 0
+[builtins fixtures/dict.pyi]
+
+[case testUnreachableBranchBySys4]
+# flags: --warn-unreachable
+import sys
+
+def f() -> int:
+    if sys.platform == "fictoinal":
+        return 1
+    else:
+        return 0
+[builtins fixtures/dict.pyi]
